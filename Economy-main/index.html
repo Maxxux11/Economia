@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Organiza tus cuentas, ingresos, gastos y metas de ahorro."
+    />
+    <meta name="theme-color" content="#193b37" />
+    <title>Mi dinero — Finanzas personales</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="#resumen" aria-label="Mi dinero, ir al resumen">
+          <span class="brand-mark" aria-hidden="true">M</span>
+          <span>Mi dinero</span>
+        </a>
+
+        <p class="eyebrow">MENÚ</p>
+        <nav class="nav" aria-label="Secciones principales">
+          <a class="nav-item active" href="#resumen">Resumen</a>
+          <a class="nav-item" href="#movimientos-section">Movimientos</a>
+          <a class="nav-item" href="#cuentas-section">Cuentas</a>
+          <a class="nav-item" href="#ahorros-section">Ahorros</a>
+          <a class="nav-item" href="#pagos-section">Pagos mensuales</a>
+          <a class="nav-item" href="#configuracion-section">Configuración</a>
+        </nav>
+
+        <div class="sidebar-note">
+          <span class="note-icon" aria-hidden="true">✓</span>
+          <p>Tus datos se guardan en este navegador.</p>
+        </div>
+        <div class="profile">
+          <div class="avatar" aria-hidden="true">MD</div>
+          <div>
+            <strong>Mis finanzas</strong>
+            <small>Espacio personal</small>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div class="breadcrumb"><span>Inicio</span><strong id="breadcrumb-current">/ Resumen</strong></div>
+          <button class="help-button" id="help-button" type="button" aria-label="Ayuda">?</button>
+        </header>
+
+        <section class="page-heading" id="resumen">
+          <div>
+            <p class="subheading">TU DINERO, MÁS CLARO</p>
+            <h1>Tu salud financiera <span>hoy</span></h1>
+            <p class="intro">Un resumen sencillo de tus cuentas y movimientos.</p>
+          </div>
+          <button class="primary-button" id="add-movement-btn" type="button">
+            <span aria-hidden="true">＋</span> Nuevo movimiento
+          </button>
+        </section>
+
+        <p class="status-message" id="status-message" role="status" aria-live="polite"></p>
+
+        <section class="summary-grid" aria-label="Resumen financiero">
+          <article class="balance-card">
+            <div class="card-label">
+              <span>Balance en tus cuentas</span>
+              <button class="visibility" id="toggle-balance" type="button" aria-label="Ocultar balance" aria-pressed="false">◉</button>
+            </div>
+            <strong id="total-balance">$0</strong>
+            <div class="balance-foot">Suma de los saldos de tus cuentas</div>
+            <div class="sparkline" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top"><span class="stat-icon income" aria-hidden="true">↑</span><span>Ingresos registrados</span></div>
+            <strong id="income-total">$0</strong>
+            <div class="stat-caption">Total de tus movimientos</div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top"><span class="stat-icon expense" aria-hidden="true">↓</span><span>Gastos registrados</span></div>
+            <strong id="expense-total">$0</strong>
+            <div class="stat-caption">Total de tus movimientos</div>
+          </article>
+        </section>
+
+        <section class="content-grid">
+          <article class="panel" id="movimientos-section">
+            <div class="panel-heading">
+              <div><h2>Movimientos recientes</h2><p>Ingresos y gastos de tus cuentas</p></div>
+              <a class="text-button" href="#todos-los-movimientos">Ver todos <span aria-hidden="true">›</span></a>
+            </div>
+            <div id="recent-movements-list" class="movement-list" aria-live="polite"></div>
+          </article>
+
+          <article class="panel accounts-panel" id="cuentas-section">
+            <div class="panel-heading">
+              <div><h2>Tus cuentas</h2><p>Saldo disponible por cuenta</p></div>
+              <button class="round-button" id="add-account-btn" type="button" aria-label="Agregar cuenta">＋</button>
+            </div>
+            <div id="accounts-list" class="account-list" aria-live="polite"></div>
+            <button class="add-account" id="add-account-secondary" type="button">＋ Agregar cuenta</button>
+          </article>
+        </section>
+
+        <section class="bottom-grid">
+          <article class="panel" id="ahorros-section">
+            <div class="panel-heading"><div><h2>Metas de ahorro</h2><p>Así avanzan tus objetivos</p></div></div>
+            <div id="goals-list" class="goal-list"></div>
+          </article>
+          <article class="panel" id="pagos-section">
+            <div class="panel-heading"><div><h2>Pagos mensuales</h2><p>Obligaciones para tener presentes</p></div></div>
+            <div id="recurring-list" class="recurring-list"></div>
+          </article>
+        </section>
+
+        <section class="panel all-movements-panel" id="todos-los-movimientos">
+          <div class="panel-heading">
+            <div><h2>Todos los movimientos</h2><p>Consulta o elimina un registro</p></div>
+            <div class="filters">
+              <label class="sr-only" for="movement-filter">Filtrar movimientos</label>
+              <select id="movement-filter">
+                <option value="Todos">Todos</option>
+                <option value="Ingreso">Ingresos</option>
+                <option value="Egreso">Gastos</option>
+              </select>
+            </div>
+          </div>
+          <div id="all-movements-list" class="movement-list" aria-live="polite"></div>
+        </section>
+
+        <section class="panel settings-panel" id="configuracion-section">
+          <div class="panel-heading">
+            <div><h2>Configuración y respaldo</h2><p>Exporta una copia de tus datos o restaura los datos de ejemplo.</p></div>
+          </div>
+          <div class="settings-actions">
+            <button class="secondary-button" id="export-data-btn" type="button">Descargar respaldo</button>
+            <button class="danger-button" id="reset-data-btn" type="button">Restaurar datos de ejemplo</button>
+          </div>
+          <p class="settings-note">Los datos se guardan únicamente en este navegador. No se envían a ningún servidor.</p>
+        </section>
+
+        <footer class="footer">Hecho para llevar tus finanzas con calma.</footer>
+      </main>
+    </div>
+
+    <div class="modal-backdrop hidden" id="modal-backdrop" aria-hidden="true">
+      <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-header">
+          <div><p class="eyebrow">DATOS FINANCIEROS</p><h2 id="modal-title">Nuevo movimiento</h2></div>
+          <button class="close-button" id="close-modal" type="button" aria-label="Cerrar">×</button>
+        </div>
+        <form id="entry-form">
+          <label class="form-field" id="name-field" for="entry-name">
+            <span id="name-label">Nombre del movimiento</span>
+            <input id="entry-name" name="name" type="text" maxlength="80" autocomplete="off" required />
+          </label>
+          <div class="field-grid" id="movement-fields">
+            <label class="form-field" for="entry-type">
+              <span>Tipo</span>
+              <select id="entry-type" name="type"><option value="Egreso">Gasto</option><option value="Ingreso">Ingreso</option></select>
+            </label>
+            <label class="form-field" for="entry-category">
+              <span>Categoría</span>
+              <input id="entry-category" name="category" type="text" maxlength="50" placeholder="Ej. Alimentación" required />
+            </label>
+            <label class="form-field" for="entry-account">
+              <span>Cuenta</span>
+              <select id="entry-account" name="account" required></select>
+            </label>
+          </div>
+          <label class="form-field" for="entry-account-type" id="account-type-field" hidden>
+            <span>Tipo de cuenta</span>
+            <input id="entry-account-type" name="accountType" type="text" maxlength="50" placeholder="Ej. Cuenta de ahorros" />
+          </label>
+          <label class="form-field" for="entry-amount">
+            <span id="amount-label">Monto (COP)</span>
+            <input id="entry-amount" name="amount" type="number" min="1" step="1" inputmode="numeric" required />
+          </label>
+          <div class="form-actions">
+            <button class="secondary-button" id="cancel-form" type="button">Cancelar</button>
+            <button class="primary-button" type="submit">Guardar</button>
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <script src="./app.js" defer></script>
+  </body>
+</html>
