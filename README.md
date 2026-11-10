@@ -12,11 +12,12 @@ node scripts/build.mjs
 
 ## Publicar en GitHub Pages
 
-1. Sube el proyecto a un repositorio de GitHub en la rama `main`.
-2. En **Settings → Pages**, selecciona **GitHub Actions** como fuente de publicación.
-3. Cada cambio en `main` ejecutará `.github/workflows/deploy.yml`. También puedes iniciarlo manualmente desde la pestaña **Actions**.
+1. Los archivos del sitio, incluido `index.html`, deben estar en la raíz del repositorio.
+2. En **Settings → Pages**, selecciona **Deploy from a branch**, la rama `main` y la carpeta `/(root)`.
+3. GitHub Pages publicará la web automáticamente después de cada cambio en `main`. Espera a que termine el flujo **pages build and deployment**.
+4. Abre la dirección que aparece en **Settings → Pages**. Para este repositorio es `https://maxxux11.github.io/Economia/`.
 
-El sitio usa rutas relativas, así que funciona en repositorios de proyecto como `usuario.github.io/Economy/` y no necesita variables secretas.
+El sitio usa rutas relativas y no necesita dependencias ni variables secretas.
 
 ## Funciones
 
